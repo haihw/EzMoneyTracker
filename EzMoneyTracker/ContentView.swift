@@ -7,37 +7,8 @@
 
 import SwiftUI
 import SwiftData
-extension Float {
-    var toString: String {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        return numberFormatter.string(from: self as NSNumber) ?? ""
-    }
-}
-extension String {
-    var toNumericValue: Float? {
-        let numericPart = self.dropLast().trimmingCharacters(in: .whitespaces)
-        let unit = self.last?.lowercased() ?? ""
-        let multiplier: Float
-        switch unit {
-        case "k":
-            multiplier = 1_000
-        case "m":
-            multiplier = 1_000_000
-        case "b":
-            multiplier = 1_000_000_000
-        default:
-            multiplier = 1
-        }
+import Charts
 
-        if let numericValue = Float(numericPart) {
-            return numericValue * multiplier
-        } else {
-            return nil
-        }
-    }
-
-}
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var transactions: [Transaction]
@@ -47,18 +18,25 @@ struct ContentView: View {
     @State private var popoverOffset: CGSize = .zero
     @FocusState private var isFieldFocused: Bool
 
-    @State private var showList = false
+    @State private var showList = true
+    @State private var columnVisibility = NavigationSplitViewVisibility.automatic
+
     var defaultCategory: Category? {
         let toLive = categories.filter { $0.name == "To Live"}.first
         return toLive
     }
     var listView: some View {
-        return List {
+        List {
+            NavigationLink {
+                chartView
+            } label: {
+                Text("Summary")
+            }
             ForEach(transactions) { item in
                 NavigationLink {
-                    Text("On \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    Text("Category: \(item.category!.name)")
-                    Text("You \(item.type == TransactionType.Expense ? "spent" : "got") \(item.amount.toString) \(item.currency.rawValue)")
+                    Text("Vào \(item.timestamp, format: Date.FormatStyle(date: .abbreviated, time: .shortened, locale: Locale.current))")
+                    Text("Bạn \(item.type == TransactionType.Expense ? "đã tiêu" : "đã nhận") \(item.amount.toString) \(item.currency.rawValue)")
+                    Text("Nhóm: \(item.category?.name ?? "-")")
                     Text("Description: \(item.memo)")
                     
                 } label: {
@@ -68,14 +46,46 @@ struct ContentView: View {
             .onDelete(perform: deleteItems)
         }
     }
+    var chartView: some View {
+        Chart {
+            ForEach(categories.filter {!$0.transactions.isEmpty}, id: \.name) { item in
+                SectorMark(
+                    angle: .value("$", item.transactions.map{$0.amount}.sum())
+                )
+                .foregroundStyle(by: .value("Type", item.name))
+                .annotation(position: .overlay) {
+                    Text("\(item.transactions.map{$0.amount}.sum().toString)$")
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                }
+            }
+        }
+        .frame(height: 500)
+    }
+    var summaryView: some View {
+        VStack(alignment: .trailing) {
+            Text("Today: \(((transactions.filter{$0.timestamp > Date().beginingOfDay}).reduce(0.0) { $0 + $1.amount}).toString)" + " " + (transactions.isEmpty ? "": transactions.first!.currency.rawValue))
+            Text("This week: \(((transactions.filter{$0.timestamp > Date().beginingOfWeek}).reduce(0.0) { $0 + $1.amount}).toString)" + " " + (transactions.isEmpty ? "": transactions.first!.currency.rawValue))
+            Text("This month: \(((transactions.filter{$0.timestamp > Date().beginingOfMonth}).reduce(0.0) { $0 + $1.amount}).toString)" + " " + (transactions.isEmpty ? "": transactions.first!.currency.rawValue))
+            Text("This year: \(((transactions.filter{$0.timestamp > Date().beginingOfYear}).reduce(0.0) { $0 + $1.amount}).toString)" + " " + (transactions.isEmpty ? "": transactions.first!.currency.rawValue))
+            Text("Total Spend: \((transactions.reduce(0.0) { $0 + $1.amount}).toString) \(transactions.isEmpty ? "": transactions.first!.currency.rawValue)")
+        }.onTapGesture {
+            isFieldFocused = false
+        }
+    }
     var body: some View {
         NavigationSplitView {
-
-            listView
-            Text("Total Spend: \((transactions.reduce(0.0) { $0 + $1.amount}).toString) \(transactions.isEmpty ? "": transactions.first!.currency.rawValue)")
+            Toggle(isOn: $showList) {
+                Text(showList ? "Switch to hide list" : "Switch to show list")
+            }.padding(16)
+            if showList {
+                listView
+            }
+            Spacer()
+            summaryView
             VStack {
                 if showOptions {
-                    Button("Select Category") {
+                    Button("i") {
                         showOptions = true
                     }
                     .popover(isPresented: $showOptions, arrowEdge: .top) {
@@ -93,7 +103,7 @@ struct ContentView: View {
                         .padding()
                     }
                     .frame(minWidth: 100, maxHeight: 200)
-                    .presentationCompactAdaptation(.none)
+                    .presentationCompactAdaptation(.popover)
                     .offset(popoverOffset)
                 }
                 TextField("Type something", text: $promptText)
@@ -102,15 +112,8 @@ struct ContentView: View {
                     .onChange(of: promptText) {
                         if promptText.last == "/" {
                             // Simulate fetching options based on searchText
-                            GeometryReader { geometry in
-                                Color.clear.onAppear {
-                                    let slashPosition = geometry.frame(in: .global).origin
-                                    print("Slash position: \(slashPosition)")
-                                    
-                                    // Calculate the desired offset based on the slash position
-                                    popoverOffset = CGSize(width: slashPosition.x, height: slashPosition.y)
-                                }
-                            }
+
+                            
                             showOptions = true
                         } else {
                             showOptions = false
@@ -121,6 +124,10 @@ struct ContentView: View {
                         promptText = ""
                         isFieldFocused = true
                     }
+                    .onAppear {
+                        print("default show")
+                        isFieldFocused = true
+                    }
                     .focused($isFieldFocused)
                 
 
@@ -128,6 +135,7 @@ struct ContentView: View {
             
             
             .padding(.top, 8)
+            .navigationSplitViewStyle(.balanced)
 #if os(macOS)
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
 #endif
@@ -142,6 +150,9 @@ struct ContentView: View {
                         Label("Destroy All", systemImage: "trash")
                     }
                 }
+                
+                
+                
             }
         } detail: {
             Text("Select an item")
@@ -171,7 +182,7 @@ struct ContentView: View {
     
     
     /// Utility
-    func extractTransactionDetails(from inputString: String) -> Transaction {
+    @discardableResult func extractTransactionDetails(from inputString: String) -> Transaction {
         var inputString = inputString
         let transaction = Transaction(timestamp: Date(), memo: inputString, amount: 0)
         var category: Category?
