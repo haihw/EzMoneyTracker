@@ -15,6 +15,8 @@
 		C522AD7E2AFD32D8005F45A2 /* EzMoneyTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C522AD7D2AFD32D8005F45A2 /* EzMoneyTrackerTests.swift */; };
 		C522AD882AFD32D8005F45A2 /* EzMoneyTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C522AD872AFD32D8005F45A2 /* EzMoneyTrackerUITests.swift */; };
 		C522AD8A2AFD32D8005F45A2 /* EzMoneyTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C522AD892AFD32D8005F45A2 /* EzMoneyTrackerUITestsLaunchTests.swift */; };
+		C5387D6D2B1C086A00950BAB /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5387D6C2B1C086A00950BAB /* TransactionView.swift */; };
+		C5387D6F2B1C08EE00950BAB /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5387D6E2B1C08EE00950BAB /* TransactionViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		C522AD832AFD32D8005F45A2 /* EzMoneyTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EzMoneyTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C522AD872AFD32D8005F45A2 /* EzMoneyTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EzMoneyTrackerUITests.swift; sourceTree = "<group>"; };
 		C522AD892AFD32D8005F45A2 /* EzMoneyTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EzMoneyTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C5387D6C2B1C086A00950BAB /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
+		C5387D6E2B1C08EE00950BAB /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				C522AD682AFD32D6005F45A2 /* EzMoneyTrackerApp.swift */,
+				C5387D6C2B1C086A00950BAB /* TransactionView.swift */,
+				C5387D6E2B1C08EE00950BAB /* TransactionViewModel.swift */,
 				C522AD6A2AFD32D6005F45A2 /* ContentView.swift */,
 				C522AD6C2AFD32D6005F45A2 /* Transaction.swift */,
 				C522AD6E2AFD32D8005F45A2 /* Assets.xcassets */,
@@ -265,8 +271,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C522AD6B2AFD32D6005F45A2 /* ContentView.swift in Sources */,
+				C5387D6D2B1C086A00950BAB /* TransactionView.swift in Sources */,
 				C522AD6D2AFD32D6005F45A2 /* Transaction.swift in Sources */,
 				C522AD692AFD32D6005F45A2 /* EzMoneyTrackerApp.swift in Sources */,
+				C5387D6F2B1C08EE00950BAB /* TransactionViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

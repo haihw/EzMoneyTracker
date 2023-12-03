@@ -11,12 +11,18 @@ enum TransactionType: Int, Codable, Hashable {
     case Income = 0
     case Expense = 1
 }
+enum Currency: String, Codable, Hashable {
+    case vnd = "₫"
+    case sgd = "S$"
+    case usd = "$"
+}
+
 @Model
 final class Category {
     var name: String
     var parent: Category?
-    @Relationship(deleteRule: .cascade, inverse: \Category.parent) var subCategories: [Category]
-    @Relationship(deleteRule: .cascade, inverse: \Transaction.category) var transactions: [Transaction]
+    @Relationship(deleteRule: .cascade, inverse: \Category.parent) var subCategories: [Category]!
+    @Relationship(deleteRule: .cascade, inverse: \Transaction.category) var transactions: [Transaction]!
     init(name: String, parent: Category? = nil) {
         self.name = name
         self.parent = parent
@@ -31,12 +37,13 @@ final class Transaction {
     var memo: String
     var category: Category?
     var type: TransactionType
-    
-    init(timestamp: Date, memo: String, amount: Float, category: Category? = nil, type: TransactionType = .Expense) {
+    var currency: Currency
+    init(timestamp: Date, memo: String, amount: Float, category: Category? = nil, type: TransactionType = .Expense, currency: Currency = .vnd) {
         self.timestamp = timestamp
         self.memo = memo
         self.amount = amount
         self.category = category
         self.type = type
+        self.currency = currency
     }
 }
