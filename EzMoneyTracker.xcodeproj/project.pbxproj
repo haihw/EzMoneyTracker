@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		C522AD692AFD32D6005F45A2 /* EzMoneyTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C522AD682AFD32D6005F45A2 /* EzMoneyTrackerApp.swift */; };
 		C522AD6B2AFD32D6005F45A2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C522AD6A2AFD32D6005F45A2 /* ContentView.swift */; };
-		C522AD6D2AFD32D6005F45A2 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = C522AD6C2AFD32D6005F45A2 /* Item.swift */; };
+		C522AD6D2AFD32D6005F45A2 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C522AD6C2AFD32D6005F45A2 /* Transaction.swift */; };
 		C522AD6F2AFD32D8005F45A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C522AD6E2AFD32D8005F45A2 /* Assets.xcassets */; };
 		C522AD732AFD32D8005F45A2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C522AD722AFD32D8005F45A2 /* Preview Assets.xcassets */; };
 		C522AD7E2AFD32D8005F45A2 /* EzMoneyTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C522AD7D2AFD32D8005F45A2 /* EzMoneyTrackerTests.swift */; };
@@ -38,7 +38,7 @@
 		C522AD652AFD32D6005F45A2 /* EzMoneyTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EzMoneyTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C522AD682AFD32D6005F45A2 /* EzMoneyTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EzMoneyTrackerApp.swift; sourceTree = "<group>"; };
 		C522AD6A2AFD32D6005F45A2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		C522AD6C2AFD32D6005F45A2 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		C522AD6C2AFD32D6005F45A2 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		C522AD6E2AFD32D8005F45A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C522AD702AFD32D8005F45A2 /* EzMoneyTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EzMoneyTracker.entitlements; sourceTree = "<group>"; };
 		C522AD722AFD32D8005F45A2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 			children = (
 				C522AD682AFD32D6005F45A2 /* EzMoneyTrackerApp.swift */,
 				C522AD6A2AFD32D6005F45A2 /* ContentView.swift */,
-				C522AD6C2AFD32D6005F45A2 /* Item.swift */,
+				C522AD6C2AFD32D6005F45A2 /* Transaction.swift */,
 				C522AD6E2AFD32D8005F45A2 /* Assets.xcassets */,
 				C522AD702AFD32D8005F45A2 /* EzMoneyTracker.entitlements */,
 				C522AD742AFD32D8005F45A2 /* Info.plist */,
@@ -265,7 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C522AD6B2AFD32D6005F45A2 /* ContentView.swift in Sources */,
-				C522AD6D2AFD32D6005F45A2 /* Item.swift in Sources */,
+				C522AD6D2AFD32D6005F45A2 /* Transaction.swift in Sources */,
 				C522AD692AFD32D6005F45A2 /* EzMoneyTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
